@@ -1,0 +1,15 @@
+{
+  "name": "cinevault",
+  "version": "1.0.0",
+  "description": "Movie explorer e collezione personale con TMDB",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js",
+    "cli": "node cli.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0"
+  }
+}

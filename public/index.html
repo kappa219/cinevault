@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CineVault — Il tuo cinema</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/detail.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="#home">Cine<span>Vault</span></a>
+      <nav>
+        <button data-view="home">Popolari</button>
+        <button data-view="discover">Scopri</button>
+        <button data-view="collection">My CineVault</button>
+      </nav>
+      <form id="search-form">
+        <input
+          id="search-input"
+          placeholder="Cerca un film..."
+          aria-label="Titolo del film"
+          required
+        />
+        <button>Cerca</button>
+      </form>
+    </header>
+    <main>
+      <section id="home-view" class="view">
+        <div class="heading">
+          <div>
+            <p class="eyebrow">IN EVIDENZA</p>
+            <h1>Film popolari</h1>
+          </div>
+        </div>
+        <div id="home-grid" class="movie-grid"></div>
+      </section>
+      <section id="discover-view" class="view hidden">
+        <div class="heading">
+          <div>
+            <p class="eyebrow">CATALOGO</p>
+            <h1>Scopri nuovi film</h1>
+          </div>
+        </div>
+        <form id="filters" class="filters">
+          <label>
+            Anno
+            <input
+              type="number"
+              name="year"
+              min="1888"
+              max="2100"
+              placeholder="es. 2025"
+            />
+          </label>
+          <label>
+            Voto minimo
+            <input
+              type="number"
+              name="minRating"
+              min="0"
+              max="10"
+              step="0.1"
+              placeholder="0–10"
+            />
+          </label>
+          <label>
+            Ordina
+            <select name="sort">
+              <option value="popularity.desc">Popolarità ↓</option>
+              <option value="popularity.asc">Popolarità ↑</option>
+              <option value="vote_average.desc">Voto ↓</option>
+              <option value="vote_average.asc">Voto ↑</option>
+              <option value="primary_release_date.desc">Data ↓</option>
+              <option value="primary_release_date.asc">Data ↑</option>
+            </select>
+          </label>
+          <label class="check">
+            <input type="checkbox" name="hideWatched" />
+            Nascondi già visti
+          </label>
+          <button>Applica filtri</button>
+        </form>
+        <div id="discover-grid" class="movie-grid"></div>
+        <div id="discover-pagination" class="pagination"></div>
+      </section>
+      <section id="search-view" class="view hidden">
+        <div class="heading">
+          <div>
+            <p class="eyebrow">RISULTATI</p>
+            <h1 id="search-title">Ricerca</h1>
+          </div>
+        </div>
+        <div id="search-grid" class="movie-grid"></div>
+        <div id="search-pagination" class="pagination"></div>
+      </section>
+      <section id="detail-view" class="view hidden"></section>
+      <section id="collection-view" class="view hidden">
+        <div class="heading">
+          <div>
+            <p class="eyebrow">LA TUA COLLEZIONE</p>
+            <h1>My CineVault</h1>
+          </div>
+        </div>
+        <div id="stats" class="stats"></div>
+        <div class="collection-tabs">
+          <button data-collection="favorites">Preferiti</button>
+          <button data-collection="watchlist">Watchlist</button>
+          <button data-collection="watched">Visti</button>
+        </div>
+        <div id="collection-grid" class="movie-grid"></div>
+      </section>
+    </main>
+    <div id="toast" role="status"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
