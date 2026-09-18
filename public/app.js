@@ -82,12 +82,12 @@ function bindCards(container) {
     .forEach((b) => (b.onclick = () => showDetail(b.dataset.detail)));
   container.querySelectorAll("[data-toggle]").forEach(
     (b) =>
-      (b.onclick = () => {
-        const active = toggle(b.dataset.toggle, b.dataset.id);
-        b.classList.toggle("active", active);
-        toast(active ? "Aggiunto alla collezione" : "Rimosso dalla collezione");
-        if (state.currentView === "collection") renderCollection();
-      }),
+    (b.onclick = () => {
+      const active = toggle(b.dataset.toggle, b.dataset.id);
+      b.classList.toggle("active", active);
+      toast(active ? "Aggiunto alla collezione" : "Rimosso dalla collezione");
+      if (state.currentView === "collection") renderCollection();
+    }),
   );
 }
 function renderGrid(selector, movies, message = "Nessun film trovato.") {
@@ -101,8 +101,8 @@ function pagination(selector, data, change) {
   el.innerHTML = `<button ${data.page <= 1 ? "disabled" : ""} data-page="prev">← Precedente</button><span>Pagina ${data.page} di ${data.totalPages}</span><button ${data.page >= data.totalPages ? "disabled" : ""} data-page="next">Successiva →</button>`;
   el.querySelectorAll("[data-page]").forEach(
     (b) =>
-      (b.onclick = () =>
-        change(b.dataset.page === "next" ? data.page + 1 : data.page - 1)),
+    (b.onclick = () =>
+      change(b.dataset.page === "next" ? data.page + 1 : data.page - 1)),
   );
 }
 function showView(name) {
@@ -176,27 +176,35 @@ async function showDetail(id) {
     $("#detail-view").innerHTML =
       `<div class="detail">${poster(m)}<div><button class="back" id="back-button">← Torna indietro</button><p class="eyebrow">DETTAGLIO FILM</p><h1>${esc(m.title)}</h1><p class="original">Titolo originale: ${esc(m.originalTitle)}</p><p class="overview">${esc(m.overview || "Descrizione non disponibile.")}</p><div class="detail-actions"><button class="${has("favorites", m.id) ? "active" : ""}" data-detail-toggle="favorites">♥ Preferito</button><button class="${has("watchlist", m.id) ? "active" : ""}" data-detail-toggle="watchlist">＋ Watchlist</button><button class="${has("watched", m.id) ? "active" : ""}" data-detail-toggle="watched">${has("watched", m.id) ? "✓ Visto" : "Segna come visto"}</button></div><form class="rating-form" id="rating-form"><label for="personal-rating">Il tuo voto</label><input id="personal-rating" type="number" min="1" max="10" step="1" value="${rate}" placeholder="1–10"><button>Salva</button></form><div class="facts"><div><strong>Uscita</strong>${esc(m.releaseDate || "—")}</div><div><strong>Voto TMDB</strong>★ ${Number(m.rating).toFixed(1)} (${m.voteCount} voti)</div><div><strong>Generi</strong>${esc(m.genres.join(", ") || "—")}</div><div><strong>Lingua originale</strong>${esc(m.originalLanguage || "—")}</div><div><strong>Popolarità</strong>${Number(m.popularity).toFixed(1)}</div><div><strong>Durata</strong>${m.runtime ? `${m.runtime} min` : "—"}</div></div></div></div>`;
     const backButton = $("#back-button");
+
+
     $(".detail").insertBefore(backButton, $(".detail").firstChild);
     backButton.textContent = "← Indietro";
     backButton.onclick = goBack;
-    document.querySelectorAll("[data-detail-toggle]").forEach(
-      (b) =>
-        (b.onclick = () => {
-          const active = toggle(b.dataset.detailToggle, m.id);
-          if (b.dataset.detailToggle === "watched")
-            b.textContent = active ? "✓ Visto" : "Segna come visto";
-          b.classList.toggle("active", active);
-          toast(
-            active ? "Aggiunto alla collezione" : "Rimosso dalla collezione",
-          );
-        }),
+    document.querySelectorAll("[data-detail-toggle]").forEach((b) =>
+    (b.onclick = () => {
+      const active = toggle(b.dataset.detailToggle, m.id);
+
+
+      if (b.dataset.detailToggle === "watched")
+        b.textContent = active ? "✓ Visto" : "Segna come visto";
+      b.classList.toggle("active", active);
+      toast(
+        active ? "Aggiunto alla collezione" : "Rimosso dalla collezione",
+      );
+    }),
     );
+
     $("#rating-form").onsubmit = (e) => {
       e.preventDefault();
       const value = Number($("#personal-rating").value);
-      if (!Number.isInteger(value) || value < 1 || value > 10)
+
+      if (!Number.isInteger(value) || value < 1 || value > 10) {
         return toast("Inserisci un voto intero da 1 a 10");
+      }
+
       const all = ratings();
+
       all[m.id] = value;
       localStorage.setItem(KEYS.ratings, JSON.stringify(all));
       toast("Valutazione personale salvata");
@@ -211,57 +219,72 @@ async function renderCollection() {
     values = Object.values(r);
   $("#stats").innerHTML = [
     ["Preferiti", list("favorites").length],
+
     ["Watchlist", list("watchlist").length],
+
     ["Film visti", list("watched").length],
     [
       "Media voti",
-      values.length
-        ? (values.reduce((a, b) => a + Number(b), 0) / values.length).toFixed(1)
+      values.length ? (values.reduce((a, b) => a + Number(b), 0) / values.length).toFixed(1)
         : "—",
     ],
   ]
     .map(([l, v]) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`)
     .join("");
+
   document.querySelectorAll("[data-collection]").forEach((b) => {
     b.style.background =
       b.dataset.collection === state.collection ? "var(--red)" : "";
+
     b.style.color = b.dataset.collection === state.collection ? "#fff" : "";
     b.onclick = () => {
       state.collection = b.dataset.collection;
       renderCollection();
     };
   });
+
+
   const ids = list(state.collection);
-  if (!ids.length)
+
+  if (!ids.length) {
     return renderGrid("#collection-grid", [], "La sezione è ancora vuota.");
+  }
+
   $("#collection-grid").innerHTML = empty("Caricamento collezione…");
   const results = await Promise.all(
     ids.map((id) => api(`/api/movies/${id}`).catch(() => null)),
   );
   renderGrid("#collection-grid", results.filter(Boolean));
+
+
 }
+
+
 $("#search-form").onsubmit = (e) => {
   e.preventDefault();
   state.search.query = $("#search-input").value.trim();
   if (state.search.query) loadSearch(1);
 };
+
 $("#filters").onsubmit = (e) => {
   e.preventDefault();
   loadDiscover(1);
 };
+
+
 $(".brand").onclick = (e) => {
   e.preventDefault();
   loadHome();
 };
-document
-  .querySelectorAll("nav [data-view]")
-  .forEach(
-    (b) =>
-      (b.onclick = () =>
-        ({
-          home: loadHome,
-          discover: () => loadDiscover(1),
-          collection: renderCollection,
-        })[b.dataset.view]()),
-  );
+document.querySelectorAll("nav [data-view]").forEach(
+  (b) =>
+  (b.onclick = () =>
+    ({
+      home: loadHome,
+      discover: () => loadDiscover(1),
+      collection: renderCollection,
+    })[b.dataset.view]()),
+);
+
+
 loadHome();
