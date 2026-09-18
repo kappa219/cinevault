@@ -11,6 +11,9 @@ app.use(logger);
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use("/api/movies", movieRoutes);
+
+
+
 app.get("/api/system", (req, res) =>
   res.json({
     success: true,
@@ -24,10 +27,13 @@ app.get("/api/system", (req, res) =>
     },
   }),
 );
+
+
 app.use("/api", (req, res) =>
   res.status(404).json({ success: false, error: "Endpoint non trovato" }),
 );
 app.use(errorHandler);
+
 if (require.main === module)
   app.listen(config.port, () =>
     console.info(`CineVault disponibile su http://localhost:${config.port}`),

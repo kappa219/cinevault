@@ -9,6 +9,8 @@ async function popular(req, res, next) {
     next(e);
   }
 }
+
+
 async function search(req, res, next) {
   try {
     events.emit("movieSearched", { query: req.query.query });
@@ -20,6 +22,8 @@ async function search(req, res, next) {
     next(e);
   }
 }
+
+
 async function details(req, res, next) {
   try {
     events.emit("movieViewed", { id: req.params.id });
@@ -35,4 +39,8 @@ async function discover(req, res, next) {
     next(e);
   }
 }
+
+
+
+
 module.exports = { popular, search, details, discover };

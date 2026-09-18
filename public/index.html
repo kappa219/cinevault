@@ -1,13 +1,21 @@
 <!doctype html>
 <html lang="it">
-  <head>
+  
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>CineVault — Il tuo cinema</title>
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/detail.css" />
   </head>
+
+
+
+
   <body>
+
+
     <header>
       <a class="brand" href="#home">Cine<span>Vault</span></a>
       <nav>
@@ -15,6 +23,8 @@
         <button data-view="discover">Scopri</button>
         <button data-view="collection">My CineVault</button>
       </nav>
+
+
       <form id="search-form">
         <input
           id="search-input"
@@ -25,16 +35,28 @@
         <button>Cerca</button>
       </form>
     </header>
+
+
+
+
     <main>
+
+
       <section id="home-view" class="view">
         <div class="heading">
+      
+      
           <div>
             <p class="eyebrow">IN EVIDENZA</p>
             <h1>Film popolari</h1>
           </div>
         </div>
-        <div id="home-grid" class="movie-grid"></div>
+
+
+        <div id="home-grid" class="movie-grid"></div>  
       </section>
+
+
       <section id="discover-view" class="view hidden">
         <div class="heading">
           <div>
@@ -67,15 +89,18 @@
           <label>
             Ordina
             <select name="sort">
+      
               <option value="popularity.desc">Popolarità ↓</option>
               <option value="popularity.asc">Popolarità ↑</option>
               <option value="vote_average.desc">Voto ↓</option>
               <option value="vote_average.asc">Voto ↑</option>
               <option value="primary_release_date.desc">Data ↓</option>
               <option value="primary_release_date.asc">Data ↑</option>
+      
             </select>
           </label>
           <label class="check">
+      
             <input type="checkbox" name="hideWatched" />
             Nascondi già visti
           </label>
@@ -84,17 +109,24 @@
         <div id="discover-grid" class="movie-grid"></div>
         <div id="discover-pagination" class="pagination"></div>
       </section>
+
+
+
       <section id="search-view" class="view hidden">
         <div class="heading">
           <div>
             <p class="eyebrow">RISULTATI</p>
             <h1 id="search-title">Ricerca</h1>
-          </div>
-        </div>
+          </div> </div>
+
+
         <div id="search-grid" class="movie-grid"></div>
         <div id="search-pagination" class="pagination"></div>
       </section>
+
+
       <section id="detail-view" class="view hidden"></section>
+      
       <section id="collection-view" class="view hidden">
         <div class="heading">
           <div>
@@ -110,6 +142,8 @@
         </div>
         <div id="collection-grid" class="movie-grid"></div>
       </section>
+
+      
     </main>
     <div id="toast" role="status"></div>
     <script src="/app.js"></script>

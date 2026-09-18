@@ -9,10 +9,13 @@ class ExternalApiError extends Error {
 }
 
 async function request(path, params = {}) {
-  if (!tmdbToken) throw new ExternalApiError("TMDB_TOKEN non configurato", 503);
+  if (!tmdbToken) throw new ExternalApiError("TMDB_ token non è presente ", 503);
   const url = new URL(`${tmdbBaseUrl}${path}`);
+
   url.search = new URLSearchParams({ language, ...params }).toString();
   let response;
+
+
   try {
     response = await fetch(url, {
       headers: {
@@ -20,13 +23,17 @@ async function request(path, params = {}) {
         accept: "application/json",
       },
     });
-  } catch {
+  }
+   catch {
     throw new ExternalApiError("Impossibile contattare TMDB");
   }
-  if (response.status === 404)
+
+
+  if (response.status === 404){
     throw new ExternalApiError("Film non trovato", 404);
+  }
   if (!response.ok)
-    throw new ExternalApiError("TMDB ha restituito un errore", 502);
+    throw new ExternalApiError("TMDB errore", 502);
   return response.json();
 }
 

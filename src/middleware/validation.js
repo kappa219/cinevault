@@ -8,6 +8,8 @@ function positiveInteger(value, label) {
     throw badRequest(`${label} deve essere un numero maggiore di zero`);
   return Number(value);
 }
+
+
 function validateSearch(req, res, next) {
   try {
     if (!req.query.query || !req.query.query.trim())
@@ -20,6 +22,8 @@ function validateSearch(req, res, next) {
     next(e);
   }
 }
+
+
 function validateId(req, res, next) {
   try {
     req.params.id = positiveInteger(req.params.id, "id");
@@ -28,6 +32,7 @@ function validateId(req, res, next) {
     next(e);
   }
 }
+
 function validateDiscover(req, res, next) {
   try {
     const { year, minRating, page, sort } = req.query;
@@ -39,6 +44,7 @@ function validateDiscover(req, res, next) {
         Number(minRating) < 0 ||
         Number(minRating) > 10)
     )
+
       throw badRequest("minRating deve essere tra 0 e 10");
     const allowed = [
       "popularity.desc",
@@ -48,7 +54,9 @@ function validateDiscover(req, res, next) {
       "primary_release_date.desc",
       "primary_release_date.asc",
     ];
-    if (sort && !allowed.includes(sort)) throw badRequest("sort non valido");
+    
+    
+    if (sort && !allowed.includes(sort)){ throw badRequest("sort non valido");}
     req.filters = {
       year: year ? Number(year) : undefined,
       minRating: minRating !== undefined ? Number(minRating) : undefined,

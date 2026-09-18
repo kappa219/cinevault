@@ -29,6 +29,8 @@ async function searchMovies(query, page = 1) {
 }
 async function getMovieDetails(id) {
   const movie = await request(`/movie/${id}`);
+
+  
   return {
     ...movieSummary(movie),
     originalTitle: movie.original_title,
