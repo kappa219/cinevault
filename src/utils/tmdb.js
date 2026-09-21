@@ -9,7 +9,7 @@ class ExternalApiError extends Error {
 }
 
 async function request(path, params = {}) {
-  if (!tmdbToken) throw new ExternalApiError("TMDB_ token non è presente ", 503);
+  if (!tmdbToken) throw new ExternalApiError("TMDB_ problema cdi accesso  ", 503);
   const url = new URL(`${tmdbBaseUrl}${path}`);
 
   url.search = new URLSearchParams({ language, ...params }).toString();
