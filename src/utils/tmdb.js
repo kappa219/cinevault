@@ -25,9 +25,9 @@ async function request(path, params = {}) {
     });
   }
    catch {
-    throw new ExternalApiError("Impossibile contattare TMDB");
+    throw new ExternalApiError("Impossibile collegarsi TMDB");
   }
-
+  
 
   if (response.status === 404){
     throw new ExternalApiError("Film non trovato", 404);

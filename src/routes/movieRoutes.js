@@ -5,8 +5,12 @@ const {
   validateId,
   validateDiscover,
 } = require("../middleware/validation");
+
+
 router.get("/popular", controller.popular);
 router.get("/search", validateSearch, controller.search);
 router.get("/discover", validateDiscover, controller.discover);
 router.get("/:id", validateId, controller.details);
+
+
 module.exports = router;

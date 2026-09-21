@@ -36,8 +36,8 @@ function validateId(req, res, next) {
 function validateDiscover(req, res, next) {
   try {
     const { year, minRating, page, sort } = req.query;
-    if (year && (!/^\d{4}$/.test(year) || Number(year) < 1888))
-      throw badRequest("year non valido");
+    if (year && (!/^\d{4}$/.test(year) || Number(year) < 1874))
+      throw badRequest("anno non valido");
     if (
       minRating !== undefined &&
       (Number.isNaN(Number(minRating)) ||
