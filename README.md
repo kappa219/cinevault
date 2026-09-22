@@ -20,7 +20,7 @@ Aprire [http://localhost:3000](http://localhost:3000). La CLI riusa lo stesso se
 
 ```bash
 npm run cli
-# oppure: node cli.js
+
 ```
 
 ## Endpoint
@@ -39,9 +39,13 @@ Le risposte sono normalizzate e hanno la forma `{ success, data }`; gli errori `
 
 - `src/utils/tmdb.js`: chiamate sicure a TMDB e header Authorization.
 - `src/services`: logica e normalizzazione dei film.
+
 - `src/controllers`, `src/routes`, `src/middleware`: API, validazione, logging ed error handler centralizzato.
+
 - `src/events`: EventEmitter per `movieSearched` e `movieViewed`.
+
 - `public`: interfaccia HTML/CSS/JavaScript vanilla; usa `fetch` verso l'API interna.
+
 - `cli.js`: menu terminale con `readline`.
 
 Il frontend è servito dallo stesso processo Express e dalla stessa origine dell'API, pertanto non occorre configurare CORS. Il token TMDB non viene mai inviato al browser ed `.env` è ignorato da Git.
@@ -51,10 +55,20 @@ Il frontend è servito dallo stesso processo Express e dalla stessa origine dell
 Dopo aver configurato un token TMDB valido, aprire `http://localhost:3000` e verificare:
 
 - Home: i film popolari vengono caricati.
+
 - Ricerca: un titolo esistente produce risultati, uno inesistente mostra una lista vuota e una richiesta senza `query` restituisce errore `400`.
+
 - Dettaglio: aprire un film esistente e provare un ID inesistente, che deve restituire un errore gestito senza stack trace.
-- Collezione: aggiungere e rimuovere un film da preferiti e watchlist, segnalarlo come visto e poi annullare la scelta.
+
+
+- Collezione: aggiungere e rimuovere un film da preferiti e watchlist, segnalarlo come visto e poi annullare la scelta.44
+
+
 - Valutazione: salvare un voto da 1 a 10, modificarlo e ricaricare la pagina; i dati devono restare presenti perché sono nel `localStorage`.
+
 - Scopri: applicare filtri, abilitare “Nascondi già visti” e usare i pulsanti di paginazione.
+
 - Errori esterni: con un token non valido o rete assente, l'interfaccia deve mostrare solo il messaggio d'errore restituito dall'API.
+
+
 - Diagnostica: aprire `http://localhost:3000/api/system` e controllare `platform`, `architecture`, `cpus`, `totalMemory`, `freeMemory` e `nodeVersion`.
