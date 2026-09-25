@@ -25,7 +25,8 @@ npm run cli
 
 ## Endpoint
 
-| Metodo | Endpoint | Descrizione |
+| Metodo      | Endpoint         | Descrizione |
+
 |---|---|---|
 | GET | `/api/movies/popular` | Film popolari |
 | GET | `/api/movies/search?query=batman&page=1` | Ricerca per titolo |
@@ -49,6 +50,7 @@ Le risposte sono normalizzate e hanno la forma `{ success, data }`; gli errori `
 - `cli.js`: menu terminale con `readline`.
 
 Il frontend è servito dallo stesso processo Express e dalla stessa origine dell'API, pertanto non occorre configurare CORS. Il token TMDB non viene mai inviato al browser ed `.env` è ignorato da Git.
+
 
 ## Verifica manuale prima della consegna
 
